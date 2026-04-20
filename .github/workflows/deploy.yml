@@ -14,7 +14,7 @@ jobs:
 
       - name: Deploy
         run: |
-          cd C:\projects\bmc-acms
+          cd E:\BMC\bmc-acms
           git pull origin main
           docker compose down
           docker compose up -d --build

@@ -1,0 +1,22 @@
+{
+  "name": "bmc-acms",
+  "version": "1.0.0",
+  "description": "BMC Air Compressor Management System — IoT Web Dashboard",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev":   "nodemon server.js"
+  },
+  "keywords": ["iot", "dashboard", "air-compressor", "monitoring", "node-red"],
+  "author": "PT. Braja Mukti Cakra",
+  "license": "UNLICENSED",
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  }
+}

@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1a2a3a"/>
+      <stop offset="100%" stop-color="#0d1117"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#58a6ff"/>
+      <stop offset="100%" stop-color="#3fb950"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="120" height="120" rx="24" fill="url(#bg)"/>
+  <rect width="120" height="120" rx="24" fill="none" stroke="rgba(88,166,255,0.3)" stroke-width="1.5"/>
+
+  <!-- Outer gear ring -->
+  <circle cx="60" cy="60" r="42" fill="none" stroke="url(#accent)" stroke-width="2" opacity="0.3"/>
+
+  <!-- Gear teeth (simplified) -->
+  <g stroke="url(#accent)" stroke-width="3" stroke-linecap="round" opacity="0.6">
+    <line x1="60" y1="12" x2="60" y2="20"/>
+    <line x1="60" y1="100" x2="60" y2="108"/>
+    <line x1="12" y1="60" x2="20" y2="60"/>
+    <line x1="100" y1="60" x2="108" y2="60"/>
+    <line x1="28" y1="28" x2="34" y2="34"/>
+    <line x1="86" y1="86" x2="92" y2="92"/>
+    <line x1="92" y1="28" x2="86" y2="34"/>
+    <line x1="34" y1="86" x2="28" y2="92"/>
+  </g>
+
+  <!-- Middle ring -->
+  <circle cx="60" cy="60" r="28" fill="rgba(88,166,255,0.06)" stroke="url(#accent)" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Center circle -->
+  <circle cx="60" cy="60" r="16" fill="url(#accent)" opacity="0.9"/>
+  <circle cx="60" cy="60" r="10" fill="#0d1117"/>
+  <circle cx="60" cy="60" r="5"  fill="url(#accent)"/>
+
+  <!-- Text: BMC -->
+  <text x="60" y="95" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="10"
+    font-weight="800" fill="url(#accent)" letter-spacing="3">BMC</text>
+</svg>

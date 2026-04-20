@@ -1,0 +1,7 @@
+{
+  "topic": "set/action",
+  "load": {
+    "target": "COMP-01",
+    "action": true
+  }
+}

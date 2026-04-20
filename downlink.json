@@ -1,0 +1,188 @@
+{
+  "topic": "dashboard/update",
+  "system": {
+    "system_mode": "MANUAL",
+    "condition_mode": true,
+    "total_energy": "100",
+    "total_cost_energy": "100",
+    "carbon_credit": "100",
+    "avg_pressure": "100",
+    "active_units": "100"
+  },
+  "presets": {
+    "schedules": [
+      {
+        "id": 1,
+        "start": "08:00",
+        "end": "11:00",
+        "assigned_on": ["COMP-01"],
+        "is_matching": true
+      },
+      {
+        "id": 2,
+        "start": "08:00",
+        "end": "11:00",
+        "assigned_on": ["COMP-01", "COMP-04"],
+        "is_matching": true
+      },
+      {
+        "id": 3,
+        "start": "08:00",
+        "end": "11:00",
+        "assigned_on": ["COMP-03"],
+        "is_matching": false
+      },
+      {
+        "id": 4,
+        "start": "08:00",
+        "end": "11:00",
+        "assigned_on": ["COMP-01"],
+        "is_matching": false
+      },
+      {
+        "id": 5,
+        "start": "08:00",
+        "end": "11:00",
+        "assigned_on": ["COMP-07"],
+        "is_matching": false
+      },
+      {
+        "id": 6,
+        "start": "08:00",
+        "end": "11:00",
+        "assigned_on": ["COMP-08"],
+        "is_matching": false
+      }
+    ],
+    "pressure": [
+      {
+        "id": 1,
+        "pressure_high": "6",
+        "pressure_low": "5",
+        "assigned_high": ["COMP-01"],
+        "assigned_low": ["COMP-01"]
+      },
+      {
+        "id": 2,
+        "pressure_high": "6",
+        "pressure_low": "5",
+        "assigned_high": ["COMP-02"],
+        "assigned_low": ["COMP-01"]
+      },
+      {
+        "id": 3,
+        "pressure_high": "6",
+        "pressure_low": "5",
+        "assigned_high": ["COMP-01"],
+        "assigned_low": ["COMP-01"]
+      }
+    ]
+  },
+  "units": [
+    {
+      "id": "COMP-01",
+      "status": {
+        "is_running": true,
+        "is_alarm": false,
+        "alarm_list": ["HIGH_TEMP", "HIGH_CURRENT"]
+      },
+      "metrics": {
+        "voltage": "100",
+        "current": "100",
+        "power": "100",
+        "energy": "100",
+        "running_hours": "100"
+      }
+    },
+    {
+      "id": "COMP-02",
+      "status": {
+        "is_running": true,
+        "is_alarm": false,
+        "alarm_list": ["HIGH_TEMP", "HIGH_CURRENT"]
+      },
+      "metrics": {
+        "voltage": "100",
+        "current": "100",
+        "power": "100",
+        "energy": "100",
+        "running_hours": "100"
+      }
+    },
+    {
+      "id": "COMP-03",
+      "status": {
+        "is_running": true,
+        "is_alarm": false,
+        "alarm_list": ["HIGH_TEMP", "HIGH_CURRENT"]
+      },
+      "metrics": {
+        "voltage": "100",
+        "current": "100",
+        "power": "100",
+        "energy": "100",
+        "running_hours": "100"
+      }
+    },
+    {
+      "id": "COMP-04",
+      "status": {
+        "is_running": true,
+        "is_alarm": false,
+        "alarm_list": ["HIGH_TEMP", "HIGH_CURRENT"]
+      },
+      "metrics": {
+        "voltage": "100",
+        "current": "100",
+        "power": "100",
+        "energy": "100",
+        "running_hours": "100"
+      }
+    },
+    {
+      "id": "COMP-05",
+      "status": {
+        "is_running": true,
+        "is_alarm": false,
+        "alarm_list": ["HIGH_TEMP", "HIGH_CURRENT"]
+      },
+      "metrics": {
+        "voltage": "100",
+        "current": "100",
+        "power": "100",
+        "energy": "100",
+        "running_hours": "100"
+      }
+    },
+    {
+      "id": "COMP-06",
+      "status": {
+        "is_running": true,
+        "is_alarm": false,
+        "alarm_list": ["HIGH_TEMP", "HIGH_CURRENT"]
+      },
+      "metrics": {
+        "voltage": "100",
+        "current": "100",
+        "power": "100",
+        "energy": "100",
+        "running_hours": "100"
+      }
+    },
+    {
+      "id": "COMP-07",
+      "status": {
+        "is_running": true,
+        "is_alarm": false,
+        "alarm_list": ["HIGH_TEMP", "HIGH_CURRENT"]
+      },
+      "metrics": {
+        "voltage": "100",
+        "current": "100",
+        "power": "100",
+        "energy": "100",
+        "running_hours": "100"
+      }
+    }
+  ]
+}

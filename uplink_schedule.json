@@ -1,0 +1,10 @@
+{
+  "topic": "set/schedule",
+  "load": {
+    "id": 2,
+    "start": "11:00",
+    "end": "13:00",
+    "assigned_on": ["COMP-01", "COMP-04"],
+    "is_matching": true
+  }
+}

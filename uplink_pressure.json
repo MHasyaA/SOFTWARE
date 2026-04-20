@@ -1,0 +1,10 @@
+{
+  "topic": "set/pressure",
+  "load": {
+    "id": 1,
+    "pressure_high": "6",
+    "pressure_low": "5",
+    "assigned_high": ["COMP-01"],
+    "assigned_low": ["COMP-01"]
+  }
+}

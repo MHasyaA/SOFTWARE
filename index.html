@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="refresh" content="0;url=login.html">
+  <title>BMC Air Compressor System</title>
+</head>
+<body>
+  <script>
+    // Redirect: if session exists go to dashboard, else login
+    try {
+      const s = localStorage.getItem('bmc_session');
+      window.location.href = s ? 'app.html' : 'login.html';
+    } catch(e) {
+      window.location.href = 'login.html';
+    }
+  </script>
+</body>
+</html>

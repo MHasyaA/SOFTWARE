@@ -132,10 +132,12 @@ const WSManager = {
     if (this._useMock) return;
     this._useMock = true;
     this._updateStatusBar();
-    console.info("[MOCK] Starting mock data simulator (Data generation disabled for production)");
+    console.info("[MOCK] Starting mock data simulator");
     
-    // Note: this._pushMockData() is commented out to prevent fake data 
-    // from overriding Node-RED payload when connection is lost.
+    // Initial push
+    this._pushMockData();
+    // Start interval
+    this.mockTimer = setInterval(() => this._pushMockData(), 2000);
   },
 
   _stopMock() {

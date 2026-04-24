@@ -174,7 +174,7 @@ var SettingsPage = {
           <td class="comp-toggle-cell" style="text-align:left; padding-left:12px;">
             <div style="margin-left:4px">${m.name}</div>
             <label class="cockpit-slider">
-              <input type="checkbox" style="display:none" checked onchange="this.parentElement.classList.toggle('off-state', !this.checked)">
+              <input type="checkbox" class="sched-comp-toggle" data-unit="${m.id}" data-row="${i}" style="display:none" checked onchange="this.parentElement.classList.toggle('off-state', !this.checked)">
               <div class="slider-ball"></div>
               <div class="slider-text-off">OFF</div>
               <div class="slider-text-on">ON</div>
@@ -188,18 +188,18 @@ var SettingsPage = {
           <td style="font-weight:800;font-size:16px">${i}</td>
           <td>
             <div style="display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;font-weight:700">
-              <div style="text-align:center"><div style="font-size:9px;color:var(--text-muted)">HH</div><input type="text" value="00" class="matrix-input"></div> :
-              <div style="text-align:center"><div style="font-size:9px;color:var(--text-muted)">MM</div><input type="text" value="00" class="matrix-input"></div>
+              <div style="text-align:center"><div style="font-size:9px;color:var(--text-muted)">HH</div><input type="text" value="00" class="matrix-input sched-time" data-row="${i}" data-pos="start-h"></div> :
+              <div style="text-align:center"><div style="font-size:9px;color:var(--text-muted)">MM</div><input type="text" value="00" class="matrix-input sched-time" data-row="${i}" data-pos="start-m"></div>
               <span>—</span>
-              <div style="text-align:center"><div style="font-size:9px;color:var(--text-muted)">HH</div><input type="text" value="00" class="matrix-input"></div> :
-              <div style="text-align:center"><div style="font-size:9px;color:var(--text-muted)">MM</div><input type="text" value="00" class="matrix-input"></div>
+              <div style="text-align:center"><div style="font-size:9px;color:var(--text-muted)">HH</div><input type="text" value="00" class="matrix-input sched-time" data-row="${i}" data-pos="end-h"></div> :
+              <div style="text-align:center"><div style="font-size:9px;color:var(--text-muted)">MM</div><input type="text" value="00" class="matrix-input sched-time" data-row="${i}" data-pos="end-m"></div>
             </div>
           </td>
           ${compsHtml}
           <td>
             <div style="font-size:11px;font-weight:800;color:var(--text-primary);margin-bottom:8px">ACTIVE</div>
             <label class="cockpit-slider" style="margin: 0 auto;">
-              <input type="checkbox" style="display:none" checked onchange="this.parentElement.classList.toggle('off-state', !this.checked)">
+              <input type="checkbox" class="sched-row-toggle" data-row="${i}" style="display:none" checked onchange="this.parentElement.classList.toggle('off-state', !this.checked)">
               <div class="slider-ball"></div>
               <div class="slider-text-off">OFF</div>
               <div class="slider-text-on">ON</div>
@@ -233,14 +233,14 @@ var SettingsPage = {
     const machines = Object.entries(CONFIG.MACHINES).map(([id, m]) => ({id, ...m}));
     const uniqueAreas = [...new Set(machines.map(m => m.area))];
     
-    const renderCompRow = (comps) => {
-      let html = '<div style="display:flex; justify-content:flex-start; align-items:center; flex:1; padding: 12px 24px; gap:40px;">';
+    const renderCompRow = (comps, areaName, type) => {
+      let html = `<div class="comp-row-container" data-area="${areaName}" data-type="${type}" style="display:flex; justify-content:flex-start; align-items:center; flex:1; padding: 12px 24px; gap:40px;">`;
       comps.forEach(m => {
         html += `
           <div class="comp-toggle-cell" style="text-align:left;">
             <div style="margin-bottom:6px; margin-left:4px;">${m.name}</div>
             <label class="cockpit-slider">
-              <input type="checkbox" style="display:none" checked onchange="this.parentElement.classList.toggle('off-state', !this.checked)">
+              <input type="checkbox" class="cond-comp-toggle" data-unit="${m.id}" style="display:none" checked onchange="this.parentElement.classList.toggle('off-state', !this.checked)">
               <div class="slider-ball"></div>
               <div class="slider-text-off">OFF</div>
               <div class="slider-text-on">ON</div>
@@ -261,19 +261,19 @@ var SettingsPage = {
           <td style="padding:0">
             <div style="display:flex;flex-direction:column;height:100%">
               <div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px;border-bottom:1px solid var(--border)">
-                <span style="font-weight:800;width:20px">&ge;</span> <input type="number" value="6" class="matrix-input">
+                <span style="font-weight:800;width:20px">&ge;</span> <input type="number" value="6" class="matrix-input cond-sp" data-area="${areaName}" data-type="high">
               </div>
               <div style="display:flex;align-items:center;justify-content:center;gap:12px;padding:16px">
-                <span style="font-weight:800;width:20px">&lt;</span> <input type="number" value="5" class="matrix-input">
+                <span style="font-weight:800;width:20px">&lt;</span> <input type="number" value="5" class="matrix-input cond-sp" data-area="${areaName}" data-type="low">
               </div>
             </div>
           </td>
 
           <td style="padding:0">
             <div style="display:flex;flex-direction:column;height:100%">
-              ${renderCompRow(comps)}
+              ${renderCompRow(comps, areaName, 'high')}
               <div style="height:1px; background:var(--border); width:100%"></div>
-              ${renderCompRow(comps)}
+              ${renderCompRow(comps, areaName, 'low')}
             </div>
           </td>
         </tr>
@@ -312,13 +312,75 @@ var SettingsPage = {
       });
     });
 
-    // Dummy toast for send
+    // Send Configuration
     const sendBtn = root.querySelector('#matrixSendBtn');
     if (sendBtn) {
       sendBtn.addEventListener('click', () => {
-        if (typeof showToast === 'function') showToast('Konfigurasi Matrix berhasil dikirim', 'success');
-        else alert('Simpan & Kirim OK');
+        if (this._activeMainTab === 'schedule') {
+          this._sendScheduleConfig();
+        } else {
+          this._sendConditionConfig();
+        }
       });
     }
+  },
+
+  _sendScheduleConfig() {
+    const schedules = [];
+    for (let i = 1; i <= 6; i++) {
+      const startH = document.querySelector(`.sched-time[data-row="${i}"][data-pos="start-h"]`)?.value || '00';
+      const startM = document.querySelector(`.sched-time[data-row="${i}"][data-pos="start-m"]`)?.value || '00';
+      const endH   = document.querySelector(`.sched-time[data-row="${i}"][data-pos="end-h"]`)?.value || '00';
+      const endM   = document.querySelector(`.sched-time[data-row="${i}"][data-pos="end-m"]`)?.value || '00';
+      const active = document.querySelector(`.sched-row-toggle[data-row="${i}"]`)?.checked;
+      
+      const assigned = [];
+      document.querySelectorAll(`.sched-comp-toggle[data-row="${i}"]`).forEach(cb => {
+        if (cb.checked) assigned.push(cb.dataset.unit);
+      });
+
+      schedules.push({
+        id: i,
+        start: `${startH}:${startM}`,
+        end: `${endH}:${endM}`,
+        active: !!active,
+        assigned_on: assigned
+      });
+    }
+
+    WSManager.send('set/schedule', schedules);
+    UI.toast('Konfigurasi Schedule berhasil dikirim', 'success');
+  },
+
+  _sendConditionConfig() {
+    const conditions = [];
+    const machines = Object.entries(CONFIG.MACHINES).map(([id, m]) => ({id, ...m}));
+    const uniqueAreas = [...new Set(machines.map(m => m.area))];
+
+    uniqueAreas.forEach(area => {
+      const spHigh = document.querySelector(`.cond-sp[data-area="${area}"][data-type="high"]`)?.value;
+      const spLow  = document.querySelector(`.cond-sp[data-area="${area}"][data-type="low"]`)?.value;
+
+      const compsHigh = [];
+      document.querySelectorAll(`.comp-row-container[data-area="${area}"][data-type="high"] .cond-comp-toggle`).forEach(cb => {
+        if (cb.checked) compsHigh.push(cb.dataset.unit);
+      });
+
+      const compsLow = [];
+      document.querySelectorAll(`.comp-row-container[data-area="${area}"][data-type="low"] .cond-comp-toggle`).forEach(cb => {
+        if (cb.checked) compsLow.push(cb.dataset.unit);
+      });
+
+      conditions.push({
+        area: area,
+        sp_high: parseFloat(spHigh) || 0,
+        sp_low: parseFloat(spLow) || 0,
+        comps_high: compsHigh,
+        comps_low: compsLow
+      });
+    });
+
+    WSManager.send('set/condition', conditions);
+    UI.toast('Konfigurasi Condition berhasil dikirim', 'success');
   }
 };

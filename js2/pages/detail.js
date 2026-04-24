@@ -87,16 +87,18 @@ var DetailPage = {
         <div class="card" style="display:flex;flex-direction:column;justify-content:space-between;text-align:center; padding: 40px 20px; height:100%;">
 
           <!-- Status badge -->
-          <div style="margin-bottom:24px; position:relative;">
+          <div style="margin-bottom:24px; position:relative; z-index:10;">
             <button class="btn btn-sm btn-secondary" onclick="DetailPage._showTrend('status')" style="position:absolute; top:-10px; right:0; font-size:10px; padding:2px 8px;">Lihat Trend</button>
             <span class="status-badge ${is_alarm ? 'badge-alarm' : is_running ? 'badge-running' : 'badge-standby'}" style="font-size:12px; padding:6px 12px">
               ${is_alarm ? '⚠ ALARM' : is_running ? '▶ RUNNING' : '■ STANDBY'}
             </span>
           </div>
 
-          <!-- SVG Icon -->
-          <div style="display:flex; justify-content:center; align-items:center; height:120px; width:100%; opacity:${is_running ? '1' : '0.5'}; transform:scale(1);">
-            ${icon}
+          <!-- SVG Icon Container -->
+          <div style="display:flex; justify-content:center; align-items:center; height:150px; width:100%; opacity:${is_running ? '1' : '0.5'}; transform:scale(1); overflow:hidden; margin-bottom:10px;">
+            <div style="width:140px; height:140px; display:flex; justify-content:center; align-items:center;">
+              ${icon}
+            </div>
           </div>
           <div style="font-size:24px; font-weight:800; color:var(--text-primary); margin-top:20px">${meta.name}</div>
           <div style="font-size:12px; font-weight:700; color:var(--text-muted); margin-top:4px">${unit.id} • ${meta.area}</div>

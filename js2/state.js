@@ -74,8 +74,11 @@ const STATE = {
   // ─── Accumulate alarm history from units[] ───────────────────────────
   _accumulateAlarms(units) {
     units.forEach(unit => {
-      const { is_alarm, alarm_list } = unit.status || {};
-      if (!is_alarm || !Array.isArray(alarm_list)) return;
+      const s = unit.status || {};
+      const alarm_list = s.alarm_list || [];
+      const has_alarms = s.is_alarm || alarm_list.length > 0;
+      
+      if (!has_alarms || !Array.isArray(alarm_list)) return;
 
       alarm_list.forEach(alarmType => {
         const exists = this.alarmHistory.some(a =>

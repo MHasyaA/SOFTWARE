@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 /* ═══════════════════════════════════════════════════════
    OVERVIEW PAGE — Figma-aligned design
    KPI row: OEE gauge, SPC, Savings, Schedule
@@ -7,8 +7,7 @@
 
 // ─── Machine SVG Icons ────────────────────────────────
 var MACHINE_ICONS = {
-
-  'atlas': `<svg viewBox="0 0 80 62" fill="none" xmlns="http://www.w3.org/2000/svg">
+  atlas: `<svg viewBox="0 0 80 62" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="2" y="18" width="60" height="28" rx="4" fill="var(--bg-surface)" stroke="var(--border-hover)" stroke-width="1.2"/>
     <rect x="6" y="9" width="38" height="11" rx="2.5" fill="var(--bg-input)" stroke="var(--border)" stroke-width="1"/>
     <line x1="12" y1="10" x2="12" y2="19" stroke="var(--border-hover)" stroke-width="1"/>
@@ -30,7 +29,7 @@ var MACHINE_ICONS = {
     <circle cx="52" cy="53" r="1.5" fill="var(--text-muted)"/>
   </svg>`,
 
-  'boge': `<svg viewBox="0 0 70 65" fill="none" xmlns="http://www.w3.org/2000/svg">
+  boge: `<svg viewBox="0 0 70 65" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="5" y="16" width="50" height="34" rx="5" fill="var(--bg-surface)" stroke="var(--border-hover)" stroke-width="1.2"/>
     <rect x="5" y="8" width="50" height="10" rx="3" fill="var(--bg-input)" stroke="var(--border)" stroke-width="1"/>
     <line x1="12" y1="9" x2="12" y2="17" stroke="var(--border-hover)" stroke-width="0.9"/>
@@ -55,7 +54,7 @@ var MACHINE_ICONS = {
     <circle cx="46" cy="57" r="1.5" fill="var(--text-muted)"/>
   </svg>`,
 
-  'piston': `<svg viewBox="0 0 75 70" fill="none" xmlns="http://www.w3.org/2000/svg">
+  piston: `<svg viewBox="0 0 75 70" fill="none" xmlns="http://www.w3.org/2000/svg">
     <rect x="10" y="36" width="54" height="22" rx="4" fill="var(--bg-surface)" stroke="var(--border-hover)" stroke-width="1.2"/>
     <circle cx="27" cy="30" r="13" fill="var(--bg-input)" stroke="var(--border-hover)" stroke-width="1.2"/>
     <circle cx="27" cy="30" r="8" fill="var(--bg-surface)" stroke="var(--border)" stroke-width="1"/>
@@ -74,7 +73,7 @@ var MACHINE_ICONS = {
     <circle cx="52" cy="64" r="3.5" fill="none" stroke="var(--border-hover)" stroke-width="1.5"/>
   </svg>`,
 
-  'airtank': `<svg viewBox="0 0 48 82" fill="none" xmlns="http://www.w3.org/2000/svg">
+  airtank: `<svg viewBox="0 0 48 82" fill="none" xmlns="http://www.w3.org/2000/svg">
     <ellipse cx="24" cy="16" rx="16" ry="8" fill="var(--bg-input)" stroke="var(--border-hover)" stroke-width="1.2"/>
     <rect x="8" y="16" width="32" height="40" fill="var(--bg-surface)" stroke="var(--border-hover)" stroke-width="1.2"/>
     <ellipse cx="24" cy="56" rx="16" ry="8" fill="var(--bg-input)" stroke="var(--border-hover)" stroke-width="1.2"/>
@@ -87,12 +86,14 @@ var MACHINE_ICONS = {
     <line x1="33" y1="64" x2="36" y2="75" stroke="var(--border-hover)" stroke-width="2" stroke-linecap="round"/>
     <rect x="8" y="73" width="8" height="4" rx="2" fill="var(--border-hover)" opacity="0.8"/>
     <rect x="32" y="73" width="8" height="4" rx="2" fill="var(--border-hover)" opacity="0.8"/>
-  </svg>`
+  </svg>`,
 };
 
 // ─── OEE Semi-circle Gauge ────────────────────────────
 function buildOEEGauge(pct) {
-  const R = 52, CX = 60, CY = 60;
+  const R = 52,
+    CX = 60,
+    CY = 60;
   const TAU = Math.PI;
   // Semi-circle starts at 180° (left) sweeps to 0° (right)
   const circumference = Math.PI * R;
@@ -119,26 +120,40 @@ function buildOEEGauge(pct) {
 // ─── Savings Mini Bar Chart ───────────────────────────
 function buildSavingsBars() {
   const heights = [55, 70, 45, 80, 60, 90, 100];
-  const colors  = ['0.4','0.5','0.35','0.6','0.45','0.7','1'];
-  return heights.map((h, i) =>
-    `<div class="savings-bar${i === 6 ? ' highlight' : ''}" style="height:${h}%;opacity:${colors[i]}"></div>`
-  ).join('');
+  const colors = ["0.4", "0.5", "0.35", "0.6", "0.45", "0.7", "1"];
+  return heights
+    .map(
+      (h, i) =>
+        `<div class="savings-bar${i === 6 ? " highlight" : ""}" style="height:${h}%;opacity:${colors[i]}"></div>`,
+    )
+    .join("");
 }
 
 // ─── Machine Ring Builder ─────────────────────────────
 function buildMachineRing(status, isAirtank) {
-  const grn = 'var(--accent-green)';
-  const red = 'var(--accent-red)';
-  const gray = 'var(--text-muted)';
-  const cyan = 'var(--accent-cyan)';
+  const grn = "var(--accent-green)";
+  const red = "var(--accent-red)";
+  const gray = "var(--text-muted)";
+  const cyan = "var(--accent-cyan)";
 
   let color, glow;
-  if (status === 'RUNNING')      { color = grn;  glow = 'var(--accent-green-glow)'; }
-  else if (status === 'ALARM')   { color = red;  glow = 'var(--accent-red-glow)'; }
-  else if (isAirtank)            { color = cyan; glow = 'var(--accent-cyan-glow)'; }
-  else                           { color = gray; glow = 'none'; }
+  if (status === "RUNNING") {
+    color = grn;
+    glow = "var(--accent-green-glow)";
+  } else if (status === "ALARM") {
+    color = red;
+    glow = "var(--accent-red-glow)";
+  } else if (isAirtank) {
+    color = cyan;
+    glow = "var(--accent-cyan-glow)";
+  } else {
+    color = gray;
+    glow = "none";
+  }
 
-  const R = 46, CX = 54, CY = 54;
+  const R = 46,
+    CX = 54,
+    CY = 54;
   const circ = 2 * Math.PI * R;
 
   return `<svg class="machine-ring-svg" viewBox="0 0 108 108" fill="none">
@@ -147,72 +162,97 @@ function buildMachineRing(status, isAirtank) {
       stroke-linecap="round"
       transform="rotate(-90 ${CX} ${CY})"
       stroke-dasharray="${circ}" stroke-dashoffset="0"
-      ${glow !== 'none' ? `style="filter:drop-shadow(0 0 6px ${glow})"` : ''}/>
+      ${glow !== "none" ? `style="filter:drop-shadow(0 0 6px ${glow})"` : ""}/>
   </svg>`;
 }
 
 // ─── Normalize unit from downlink ────────────────────
 // Downlink sends status as object; normalize to string
 function normalizeUnit(raw) {
-  if (!raw) return { id: '?', status: 'STOP', pressure: null, power: 0, running_hour: 0, energy_today: 0 };
+  if (!raw)
+    return {
+      id: "?",
+      status: "STOP",
+      pressure: null,
+      power: 0,
+      running_hour: 0,
+      energy_today: 0,
+    };
   // If status is already a string
-  if (typeof raw.status === 'string') {
+  if (typeof raw.status === "string") {
     const m = raw.metrics || {};
     return {
-      id:           raw.id,
-      status:       raw.status,
-      pressure:     raw.pressure      ?? (parseFloat(m.pressure)      || null),
-      power:        raw.power         ?? (parseFloat(m.power)         || 0),
-      running_hour: raw.running_hour  ?? (Math.round(parseFloat(m.running_hours)) || 0),
-      energy_today: raw.energy_today  ?? (parseFloat(m.energy)        || 0)
+      id: raw.id,
+      status: raw.status,
+      pressure: raw.pressure ?? (parseFloat(m.pressure) || null),
+      power: raw.power ?? (parseFloat(m.power) || 0),
+      running_hour:
+        raw.running_hour ?? (Math.round(parseFloat(m.running_hours)) || 0),
+      energy_today: raw.energy_today ?? (parseFloat(m.energy) || 0),
     };
   }
   // Status is an object {is_running, is_alarm, alarm_list}
   const s = raw.status || {};
   let status;
-  if (s.is_alarm)    status = 'ALARM';
-  else if (s.is_running) status = 'RUNNING';
-  else                   status = 'STOP';
+  if (s.is_alarm || (s.alarm_list && s.alarm_list.length > 0)) status = "ALARM";
+  else if (s.is_running) status = "RUNNING";
+  else status = "STOP";
   const m = raw.metrics || {};
   return {
-    id:           raw.id,
+    id: raw.id,
     status,
-    pressure:     parseFloat(m.pressure)               || null,
-    power:        parseFloat(m.power)                  || 0,
+    pressure: parseFloat(m.pressure) || null,
+    power: parseFloat(m.power) || 0,
     running_hour: Math.round(parseFloat(m.running_hours)) || 0,
-    energy_today: parseFloat(m.energy)                 || 0
+    energy_today: parseFloat(m.energy) || 0,
   };
 }
 
 // ─── Machine Card Builder ─────────────────────────────
 function buildMachineCard(rawUnit) {
   const unit = normalizeUnit(rawUnit);
-  const meta    = CONFIG.MACHINES[unit.id] || { name: unit.id, area: '—', type: 'boge', brand: '—' };
-  const status  = unit.status;
-  const isAirtank = meta.type === 'airtank';
+  const meta = CONFIG.MACHINES[unit.id] || {
+    name: unit.id,
+    area: "—",
+    type: "boge",
+    brand: "—",
+  };
+  const status = unit.status;
+  const isAirtank = meta.type === "airtank";
 
   let statusClass, statusLabel;
-  if (status === 'RUNNING')      { statusClass = 'mstatus-running'; statusLabel = 'RUNNING'; }
-  else if (status === 'ALARM')   { statusClass = 'mstatus-alarm';   statusLabel = 'ALARM'; }
-  else if (status === 'STANDBY') { statusClass = 'mstatus-standby'; statusLabel = 'STANDBY'; }
-  else if (isAirtank)            { statusClass = 'mstatus-valve';   statusLabel = 'VALVE ON'; }
-  else                           { statusClass = 'mstatus-stop';    statusLabel = 'STOP'; }
+  if (status === "RUNNING") {
+    statusClass = "mstatus-running";
+    statusLabel = "RUNNING";
+  } else if (status === "ALARM") {
+    statusClass = "mstatus-alarm";
+    statusLabel = "ALARM";
+  } else if (status === "STANDBY") {
+    statusClass = "mstatus-standby";
+    statusLabel = "STANDBY";
+  } else if (isAirtank) {
+    statusClass = "mstatus-valve";
+    statusLabel = "VALVE ON";
+  } else {
+    statusClass = "mstatus-stop";
+    statusLabel = "STOP";
+  }
 
-  const icon = MACHINE_ICONS[meta.type] || MACHINE_ICONS['boge'];
+  const icon = MACHINE_ICONS[meta.type] || MACHINE_ICONS["boge"];
 
   const metrics = isAirtank
     ? `<div class="machine-metric machine-metric-pressure">
          <span class="machine-metric-label">Pressure</span>
-         <span class="machine-metric-value">${unit.pressure ?? '—'} <span class="machine-metric-unit">Bar</span></span>
+         <span class="machine-metric-value">${unit.pressure ?? "—"} <span class="machine-metric-unit">Bar</span></span>
        </div>`
     : `<div class="machine-metric">
          <span class="machine-metric-label">Run Hour</span>
-         <span class="machine-metric-value">${unit.running_hour ?? '—'}</span>
+         <span class="machine-metric-value">${unit.running_hour ?? "—"}</span>
          <span class="machine-metric-unit">Hour</span>
        </div>
        <div class="machine-metric">
          <span class="machine-metric-label">Power</span>
-         <span class="machine-metric-value">${unit.power != null ? unit.power.toFixed(1) : '—'}</span>
+         <span class="machine-metric-value">${unit.power != null ? unit.power.toFixed(1) : "—"}</span>
          <span class="machine-metric-unit">kW</span>
        </div>`;
 
@@ -241,11 +281,13 @@ function buildMachineCard(rawUnit) {
 
 // ─── KPI Cards ────────────────────────────────────────
 function buildKPICards(sys, units, metrics) {
-  const { totalEnergy, energyCost, avgPressure, activeCount, totalCount } = metrics;
-  
-  // Dummy Carbon Credit Calculation (e.g. Total Energy * 0.8 / 1000)
-  const carbonCredit = (parseFloat(totalEnergy) * 0.0008).toFixed(2);
-  
+  const { totalEnergy, energyCost, avgPressure, activeCount, totalCount } =
+    metrics;
+
+  // Mengambil angka dari backend Node-RED sepenuhnya
+  const carbonCredit =
+    sys && sys.carbon_credit !== undefined ? sys.carbon_credit : "0";
+
   // Dummy comparison data for "Total kWh" (up/down)
   const lastMonthTotal = 45000;
   const currentTotal = parseFloat(totalEnergy) || 48000;
@@ -261,14 +303,16 @@ function buildKPICards(sys, units, metrics) {
       <div class="kpi-figma-label">Total kWh Bulan Ini<span class="kpi-figma-menu">···</span></div>
       <div class="spc-body" style="flex-direction:column; align-items:flex-start; margin-top:10px">
         <div class="spc-val-row" style="margin-bottom:8px">
-          <span class="spc-value" style="font-size:32px">${currentTotal.toLocaleString('id-ID')}</span>
+          <span class="spc-value" style="font-size:32px">${currentTotal.toLocaleString("id-ID")}</span>
           <span class="spc-unit">kWh</span>
         </div>
-        <div class="spc-trend-lbl ${isUp ? 'trend-bad' : 'trend-good'}">
-          ${isUp 
-            ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`
-            : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>`}
-          ${isUp ? 'Naik' : 'Turun'} ${Math.abs(deltaPct)}% vs bln lalu
+        <div class="spc-trend-lbl ${isUp ? "trend-bad" : "trend-good"}">
+          ${
+            isUp
+              ? `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>`
+              : `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>`
+          }
+          ${isUp ? "Naik" : "Turun"} ${Math.abs(deltaPct)}% vs bln lalu
         </div>
       </div>
     </div>
@@ -319,27 +363,42 @@ var OverviewPage = {
 
   mount() {
     this._draw(STATE.getState());
-    this._unsub = STATE.subscribe(s => this._draw(s));
+    this._unsub = STATE.subscribe((s) => this._draw(s));
   },
 
   unmount() {
     if (this._unsub) this._unsub();
-    if (this._chartEnergy) { this._chartEnergy.destroy(); this._chartEnergy = null; }
+    if (this._chartEnergy) {
+      this._chartEnergy.destroy();
+      this._chartEnergy = null;
+    }
   },
 
   _draw(state) {
-    const root = document.getElementById('overviewRoot');
+    const root = document.getElementById("overviewRoot");
     if (!root) return;
 
     const { system: sys, units: rawUnits, alarms } = state;
-    const units       = rawUnits.map(normalizeUnit);
-    const activeCount  = units.filter(u => u.status === 'RUNNING').length;
-    const alarmCount   = alarms.filter(a => a.status === 'active').length;
-    const avgPressure  = units.length
-      ? (units.reduce((s, u) => s + (u.pressure || 0), 0) / units.length).toFixed(1)
-      : '—';
-    const totalEnergy  = units.reduce((s, u) => s + (u.energy_today || 0), 0).toFixed(0);
-    const energyCost   = (parseFloat(totalEnergy) * 1487).toLocaleString('id-ID');
+    const units = rawUnits.map(normalizeUnit);
+    const activeCount =
+      sys && sys.active_units !== undefined ? sys.active_units : "0";
+    const alarmCount = alarms.filter((a) => a.status === "active").length;
+
+    const avgPressure =
+      sys && sys.avg_pressure !== undefined ? sys.avg_pressure : "0";
+    const totalEnergy =
+      sys && sys.total_energy !== undefined ? sys.total_energy : "0";
+
+    // Jika data dari Node-RED berupa angka, format menjadi pemisah ribuan agar rapi.
+    // Jika Node-RED telanjur mengirim string dengan koma, biarkan apa adanya.
+    let energyCost = "0";
+    if (sys && sys.total_cost_energy !== undefined) {
+      if (!isNaN(sys.total_cost_energy)) {
+        energyCost = parseFloat(sys.total_cost_energy).toLocaleString("id-ID");
+      } else {
+        energyCost = sys.total_cost_energy;
+      }
+    }
 
     root.innerHTML = `
       ${buildKPICards(sys, units, { avgPressure, totalEnergy, energyCost, activeCount, totalCount: units.length })}
@@ -348,12 +407,14 @@ var OverviewPage = {
         UNIT STATUS
         <span style="margin-left:auto;font-size:10px;font-weight:600;color:var(--text-secondary)">
           ${activeCount}/${units.length} unit berjalan
-          ${alarmCount ? `· <span style="color:var(--accent-red)">${alarmCount} alarm aktif</span>` : ''}
+          ${alarmCount ? `· <span style="color:var(--accent-red)">${alarmCount} alarm aktif</span>` : ""}
         </span>
       </div>
       <div class="machine-grid" id="machineGrid">
-        ${units.length
-          ? units.map(u => buildMachineCard(u)).join('') + `
+        ${
+          units.length
+            ? units.map((u) => buildMachineCard(u)).join("") +
+              `
             <div class="machine-card add-device-card" onclick="OverviewPage._addDeviceDialog()" style="display:flex;flex-direction:column;align-items:center;justify-content:center;border:2px dashed var(--border-hover);background:transparent;cursor:pointer;opacity:0.7;transition:0.2s;">
               <div style="width:48px;height:48px;border-radius:24px;background:var(--bg-input);display:flex;align-items:center;justify-content:center;margin-bottom:12px">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -361,7 +422,8 @@ var OverviewPage = {
               <div style="font-weight:700;color:var(--text-primary)">Add New Device</div>
             </div>
           `
-          : '<div class="loading-state"><div class="spinner"></div></div>'}
+            : '<div class="loading-state"><div class="spinner"></div></div>'
+        }
       </div>
 
       <!-- Energy chart row -->
@@ -380,60 +442,91 @@ var OverviewPage = {
 
   _buildChart(units) {
     if (this._chartEnergy) this._chartEnergy.destroy();
-    const ctx = document.getElementById('chartEnergy');
+    const ctx = document.getElementById("chartEnergy");
     if (!ctx || !units.length) return;
 
-    const labels = units.map(u => (CONFIG.MACHINES[u.id] || {}).name || u.id);
-    const data   = units.map(u => u.energy_today || 0);
-    const colors = units.map(u => {
-      if (u.status === 'ALARM')   return 'rgba(248,113,113,0.75)';
-      if (u.status === 'RUNNING') return 'rgba(74,222,128,0.75)';
-      return 'rgba(94,110,130,0.55)';
+    const labels = units.map((u) => (CONFIG.MACHINES[u.id] || {}).name || u.id);
+    const data = units.map((u) => u.energy_today || 0);
+    const colors = units.map((u) => {
+      if (u.status === "ALARM") return "rgba(248,113,113,0.75)";
+      if (u.status === "RUNNING") return "rgba(74,222,128,0.75)";
+      return "rgba(94,110,130,0.55)";
     });
 
-    const isDark = document.documentElement.getAttribute('data-theme') !== 'light';
-    const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(44,62,80,0.08)';
-    const textColor = isDark ? '#9ea8ba' : '#4a637a';
+    const isDark =
+      document.documentElement.getAttribute("data-theme") !== "light";
+    const gridColor = isDark ? "rgba(255,255,255,0.06)" : "rgba(44,62,80,0.08)";
+    const textColor = isDark ? "#9ea8ba" : "#4a637a";
 
     this._chartEnergy = new Chart(ctx, {
-      type: 'bar',
+      type: "bar",
       data: {
         labels,
-        datasets: [{ data, backgroundColor: colors, borderRadius: 5, borderSkipped: false }]
+        datasets: [
+          {
+            data,
+            backgroundColor: colors,
+            borderRadius: 5,
+            borderSkipped: false,
+          },
+        ],
       },
       options: {
-        responsive: true, maintainAspectRatio: false,
+        responsive: true,
+        maintainAspectRatio: false,
         plugins: { legend: { display: false } },
         scales: {
-          x: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } },
-          y: { grid: { color: gridColor }, ticks: { color: textColor, font: { size: 10 } } }
-        }
-      }
+          x: {
+            grid: { color: gridColor },
+            ticks: { color: textColor, font: { size: 10 } },
+          },
+          y: {
+            grid: { color: gridColor },
+            ticks: { color: textColor, font: { size: 10 } },
+          },
+        },
+      },
     });
   },
 
   _addDeviceDialog() {
     UI.confirm(
-      'Minta Akses Penambahan Perangkat',
+      "Minta Akses Penambahan Perangkat",
       `Penambahan unit kompresor (Hardware baru) memerlukan konfigurasi langsung dari admin Node-RED dan integrasi sensor Modbus.<br><br>
        <input type="text" id="newDeviceName" placeholder="Nama/ID Perangkat Baru" class="filter-select" style="width:100%; margin-top:10px; padding:10px; font-weight:600">`,
       () => {
-        const name = document.getElementById('newDeviceName')?.value || 'NEW-DEVICE';
+        const name =
+          document.getElementById("newDeviceName")?.value || "NEW-DEVICE";
         // Mocking the backend addition
-        UI.toast(`Request pendaftaran perangkat [${name}] dikirim ke administrator.`, 'success');
-        
+        UI.toast(
+          `Request pendaftaran perangkat [${name}] dikirim ke administrator.`,
+          "success",
+        );
+
         // Add locally to mock state for demo purposes
-        const newId = name.toUpperCase().replace(/\s+/g, '-');
+        const newId = name.toUpperCase().replace(/\s+/g, "-");
         if (!CONFIG.MACHINES[newId]) {
-          CONFIG.MACHINES[newId] = { name: name, area: 'NEW AREA', type: 'boge' };
+          CONFIG.MACHINES[newId] = {
+            name: name,
+            area: "NEW AREA",
+            type: "boge",
+          };
           STATE.units.push({
-            id: newId, status: { is_running: false, is_alarm: false },
-            metrics: { pressure: 0, power: 0, current: 0, voltage: 0, running_hours: 0, energy: 0 }
+            id: newId,
+            status: { is_running: false, is_alarm: false },
+            metrics: {
+              pressure: 0,
+              power: 0,
+              current: 0,
+              voltage: 0,
+              running_hours: 0,
+              energy: 0,
+            },
           });
-          STATE._notify('update');
+          STATE._notify("update");
         }
       },
-      'Request Akses'
+      "Request Akses",
     );
-  }
+  },
 };
